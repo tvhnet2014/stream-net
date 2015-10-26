@@ -7,8 +7,8 @@ namespace Stream
     [Serializable]
     public class StreamException : Exception
     {
-        internal StreamException(ExceptionState state)
-            : base(message: state.Detail)
+        internal StreamException(ExceptionState state, string content)
+            : base(message: state.Detail + "\r\n" + content)
         {
         
         }
@@ -26,10 +26,10 @@ namespace Stream
         internal static StreamException FromResponse(IRestResponse response)
         {
             //{"code": 6, "detail": "The following feeds are not configured: 'secret'", "duration": "4ms", "exception": "FeedConfigException", "status_code": 400}
-
-            var state = JsonConvert.DeserializeObject<ExceptionState>(response.Content);
+            var content = response.Content;
+            var state = JsonConvert.DeserializeObject<ExceptionState>(content);
             
-            throw new StreamException(state);
+            throw new StreamException(state, content);
         }
     }
 }
