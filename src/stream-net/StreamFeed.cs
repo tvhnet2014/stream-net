@@ -210,8 +210,8 @@ namespace Stream
                             result.Duration = prop.Value.Value<String>();
                             break;
                         }
-                    default:
-                        break;
+                   // default:
+                     //   break;
                 }
             }
 
